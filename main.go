@@ -41,7 +41,6 @@ var decryptors = map[string]Decryptor{
 		}
 		return "task_" + string(decoded), nil
 	},
-	// Decryptor for "swapped every pair of characters"
 	"swapped every pair of characters": func(challenge ChallengeResponse) (string, error) {
 		trimmedPath := strings.TrimPrefix(challenge.EncryptedPath, "task_")
 
@@ -58,7 +57,6 @@ var decryptors = map[string]Decryptor{
 
 		return "task_" + string(swappedPath), nil
 	},
-	// Dynamic rotation decryptor
 	"circularly rotated left by": func(challenge ChallengeResponse) (string, error) {
 		// Extract the number of positions to rotate from the encryption method description
 		var rotationAmount int
@@ -87,9 +85,7 @@ var decryptors = map[string]Decryptor{
 		// Re-append "task_" prefix after processing
 		return "task_" + rotatedPath, nil
 	},
-
-	// Decryptor for "hex decoded, encrypted with XOR, hex encoded again. key: secret"
-	"hex decoded, encrypted with XOR, hex encoded again. key: secret": func(challenge ChallengeResponse) (string, error) {
+	"hex decoded, encrypted with XOR, hex encoded again.": func(challenge ChallengeResponse) (string, error) {
 		// Extract the dynamic key from the encryption method description
 		var key string
 		pattern := `key: (.+)`
@@ -147,7 +143,6 @@ var decryptors = map[string]Decryptor{
 		// Assuming the decrypted path does not need 'task_' re-prepended or further processing
 		return "task_" + string(decryptedPath), nil
 	},
-	// Decryptor for "converted to a JSON array of ASCII values"
 	"converted to a JSON array of ASCII values": func(challenge ChallengeResponse) (string, error) {
 		// Trim the prefix "task_" and the square brackets from the encrypted path
 		trimmedPath := strings.TrimPrefix(challenge.EncryptedPath, "task_")
@@ -171,7 +166,6 @@ var decryptors = map[string]Decryptor{
 
 		return "task_" + decryptedPath, nil
 	},
-	// Assuming this is part of a larger map or switch handling different encryption methods
 	"ASCII value of each character": func(challenge ChallengeResponse) (string, error) {
 		// Extract the adjustment value from the encryption_method description
 		var adjustment int
