@@ -8,6 +8,7 @@ import (
 	"io"
 	"net/http"
 	"regexp"
+	"strconv"
 	"strings"
 
 	"github.com/vmihailenco/msgpack/v5"
@@ -146,11 +147,56 @@ var decryptors = map[string]Decryptor{
 		// Assuming the decrypted path does not need 'task_' re-prepended or further processing
 		return "task_" + string(decryptedPath), nil
 	},
+	// Decryptor for "converted to a JSON array of ASCII values"
+	"converted to a JSON array of ASCII values": func(challenge ChallengeResponse) (string, error) {
+		// Trim the prefix "task_" and the square brackets from the encrypted path
+		trimmedPath := strings.TrimPrefix(challenge.EncryptedPath, "task_")
+		trimmedPath = strings.Trim(trimmedPath, "[]")
+
+		// Split the ASCII values by comma
+		asciiValues := strings.Split(trimmedPath, ",")
+
+		// Convert each ASCII value to its corresponding character
+		var decryptedPathChars []byte
+		for _, asciiStr := range asciiValues {
+			asciiVal, err := strconv.Atoi(asciiStr)
+			if err != nil {
+				return "", fmt.Errorf("error converting ASCII value '%s' to integer: %v", asciiStr, err)
+			}
+			decryptedPathChars = append(decryptedPathChars, byte(asciiVal))
+		}
+
+		// Convert the byte slice to a string
+		decryptedPath := string(decryptedPathChars)
+
+		return "task_" + decryptedPath, nil
+	},
+	// Assuming this is part of a larger map or switch handling different encryption methods
+	"ASCII value of each character": func(challenge ChallengeResponse) (string, error) {
+		// Extract the adjustment value from the encryption_method description
+		var adjustment int
+		_, err := fmt.Sscanf(challenge.EncryptionMethod, "added %d to ASCII value of each character", &adjustment)
+		if err != nil {
+			return "", fmt.Errorf("failed to extract adjustment value: %v", err)
+		}
+
+		encryptedPath := strings.TrimPrefix(challenge.EncryptedPath, "task_")
+		var decryptedChars []rune
+		for _, ch := range encryptedPath {
+			// Reverse the encryption by subtracting the negative adjustment, which is equivalent to adding its absolute value
+			decryptedChar := rune(ch) - rune(adjustment)
+			decryptedChars = append(decryptedChars, decryptedChar)
+		}
+
+		decryptedPath := string(decryptedChars)
+
+		return "task_" + decryptedPath, nil
+	},
 }
 
 func main() {
 	baseURL := "https://ciphersprint.pulley.com/"
-	email := "gfreefitz@gmail.com"
+	email := "syntaqx@gmail.com"
 
 	// Start the challenge process
 	err := handleChallenge(fmt.Sprintf("%s%s", baseURL, email), 0)
