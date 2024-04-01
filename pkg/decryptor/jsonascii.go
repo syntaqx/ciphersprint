@@ -15,7 +15,7 @@ func (d *JSONASCIIDecryptor) Match(challenge challenge.ChallengeResponse) bool {
 }
 
 func (d *JSONASCIIDecryptor) Decrypt(challenge challenge.ChallengeResponse) (string, error) {
-	trimmedPath := strings.TrimPrefix(challenge.EncryptedPath, "task_")
+	trimmedPath := strings.TrimPrefix(challenge.EncryptedPath, TaskPrefix)
 	var asciiValues []int
 	if err := json.Unmarshal([]byte(trimmedPath), &asciiValues); err != nil {
 		return "", fmt.Errorf("JSON unmarshal error: %v", err)
@@ -27,5 +27,5 @@ func (d *JSONASCIIDecryptor) Decrypt(challenge challenge.ChallengeResponse) (str
 	}
 
 	decryptedPath := string(decryptedPathChars)
-	return "task_" + decryptedPath, nil
+	return TaskPrefix + decryptedPath, nil
 }

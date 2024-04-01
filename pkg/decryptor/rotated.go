@@ -19,9 +19,9 @@ func (d *RotatedDecryptor) Decrypt(challenge challenge.ChallengeResponse) (strin
 	if err != nil {
 		return "", fmt.Errorf("failed to parse rotation amount: %v", err)
 	}
-	trimmedPath := strings.TrimPrefix(challenge.EncryptedPath, "task_")
+	trimmedPath := strings.TrimPrefix(challenge.EncryptedPath, TaskPrefix)
 	effectiveRotation := rotationAmount % len(trimmedPath)
 	reverseRotation := len(trimmedPath) - effectiveRotation
 	rotatedPath := trimmedPath[reverseRotation:] + trimmedPath[:reverseRotation]
-	return "task_" + rotatedPath, nil
+	return TaskPrefix + rotatedPath, nil
 }

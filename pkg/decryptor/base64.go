@@ -14,10 +14,10 @@ func (d *Base64Decryptor) Match(challenge challenge.ChallengeResponse) bool {
 }
 
 func (d *Base64Decryptor) Decrypt(challenge challenge.ChallengeResponse) (string, error) {
-	trimmedPath := strings.TrimPrefix(challenge.EncryptedPath, "task_")
+	trimmedPath := strings.TrimPrefix(challenge.EncryptedPath, TaskPrefix)
 	decoded, err := base64.StdEncoding.DecodeString(trimmedPath)
 	if err != nil {
 		return "", err
 	}
-	return "task_" + string(decoded), nil
+	return TaskPrefix + string(decoded), nil
 }

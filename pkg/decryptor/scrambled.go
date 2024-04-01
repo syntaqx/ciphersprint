@@ -29,11 +29,11 @@ func (d *ScrambledDecryptor) Decrypt(challenge challenge.ChallengeResponse) (str
 		return "", fmt.Errorf("messagepack unmarshalling failed: %v", err)
 	}
 
-	encryptedPath := strings.TrimPrefix(challenge.EncryptedPath, "task_")
+	encryptedPath := strings.TrimPrefix(challenge.EncryptedPath, TaskPrefix)
 	decryptedPath := make([]byte, len(encryptedPath))
 	for i, pos := range positions {
 		decryptedPath[pos] = encryptedPath[i]
 	}
 
-	return "task_" + string(decryptedPath), nil
+	return TaskPrefix + string(decryptedPath), nil
 }

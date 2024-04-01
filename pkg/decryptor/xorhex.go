@@ -26,7 +26,7 @@ func (d *XorHexDecryptor) Decrypt(challenge challenge.ChallengeResponse) (string
 	}
 	key = match[1]
 
-	encryptedData, err := hex.DecodeString(strings.TrimPrefix(challenge.EncryptedPath, "task_"))
+	encryptedData, err := hex.DecodeString(strings.TrimPrefix(challenge.EncryptedPath, TaskPrefix))
 	if err != nil {
 		return "", fmt.Errorf("hex decoding failed: %v", err)
 	}
@@ -37,5 +37,5 @@ func (d *XorHexDecryptor) Decrypt(challenge challenge.ChallengeResponse) (string
 	}
 
 	decryptedPath := hex.EncodeToString(decryptedBytes)
-	return "task_" + decryptedPath, nil
+	return TaskPrefix + decryptedPath, nil
 }

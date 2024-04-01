@@ -13,7 +13,7 @@ func (d *SwappedDecryptor) Match(challenge challenge.ChallengeResponse) bool {
 }
 
 func (d *SwappedDecryptor) Decrypt(challenge challenge.ChallengeResponse) (string, error) {
-	trimmedPath := strings.TrimPrefix(challenge.EncryptedPath, "task_")
+	trimmedPath := strings.TrimPrefix(challenge.EncryptedPath, TaskPrefix)
 	var swappedPath []rune
 	for i := 0; i < len(trimmedPath)-1; i += 2 {
 		swappedPath = append(swappedPath, rune(trimmedPath[i+1]), rune(trimmedPath[i]))
@@ -21,5 +21,5 @@ func (d *SwappedDecryptor) Decrypt(challenge challenge.ChallengeResponse) (strin
 	if len(trimmedPath)%2 != 0 {
 		swappedPath = append(swappedPath, rune(trimmedPath[len(trimmedPath)-1]))
 	}
-	return "task_" + string(swappedPath), nil
+	return TaskPrefix + string(swappedPath), nil
 }

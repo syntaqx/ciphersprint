@@ -20,7 +20,7 @@ func (d *ASCIIAddDecryptor) Decrypt(challenge challenge.ChallengeResponse) (stri
 		return "", fmt.Errorf("failed to extract adjustment value: %v", err)
 	}
 
-	encryptedPath := strings.TrimPrefix(challenge.EncryptedPath, "task_")
+	encryptedPath := strings.TrimPrefix(challenge.EncryptedPath, TaskPrefix)
 	var decryptedChars []rune
 	for _, ch := range encryptedPath {
 		decryptedChar := rune(ch) - rune(adjustment)
@@ -28,5 +28,5 @@ func (d *ASCIIAddDecryptor) Decrypt(challenge challenge.ChallengeResponse) (stri
 	}
 
 	decryptedPath := string(decryptedChars)
-	return "task_" + decryptedPath, nil
+	return TaskPrefix + decryptedPath, nil
 }
