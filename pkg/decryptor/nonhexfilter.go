@@ -19,7 +19,8 @@ func (d *NonHexFilterDecryptor) Decrypt(challenge challenge.ChallengeResponse) (
 	re := regexp.MustCompile(`[^0-9a-fA-F]`)
 
 	trimmedPath := strings.TrimPrefix(challenge.EncryptedPath, TaskPrefix)
-	// Filter out non-hex characfters
+
+	// Filter out non-hex chars
 	filteredPath := re.ReplaceAllString(trimmedPath, "")
 
 	return TaskPrefix + filteredPath, nil
