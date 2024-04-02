@@ -20,3 +20,9 @@ jobs:
           cache: true
       - name: Test
         run: go test -race -coverprofile=coverage.out -covermode=atomic ./...
+      -
+        name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v4.0.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: syntaqx/ciphersprint
