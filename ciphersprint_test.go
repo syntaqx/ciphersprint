@@ -13,7 +13,6 @@ import (
 func TestClient_GetChallenge(t *testing.T) {
 	// Create a test server
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		// Set the response body
 		challengeResponse := challenge.ChallengeResponse{
 			EncryptionMethod: "hex decoded, encrypted with XOR, hex encoded again. key: secret",
 			EncryptedPath:    "task_2480774e9c35486d2825654caa1a8b63",
