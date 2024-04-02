@@ -7,5 +7,5 @@ challenges, so I was able to implement multiple decryptors.
 
 > [!NOTE]
 > I believe some of these aren't fully correct, as sometimes I did not get
-> successful decryptions (looking at your xorhex), but since I didn't have full
+> successful decryptions (looking at you xorhex), but since I didn't have full
 > logging implemented, I wasn't able to add test cases and solve for it.
