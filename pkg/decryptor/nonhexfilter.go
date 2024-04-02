@@ -15,7 +15,6 @@ func (d *NonHexFilterDecryptor) Match(challenge challenge.ChallengeResponse) boo
 }
 
 func (d *NonHexFilterDecryptor) Decrypt(challenge challenge.ChallengeResponse) (string, error) {
-	// Define a regular expression to match non-hexadecimal characters
 	re := regexp.MustCompile(`[^0-9a-fA-F]`)
 
 	trimmedPath := strings.TrimPrefix(challenge.EncryptedPath, TaskPrefix)
