@@ -1,5 +1,7 @@
 # CipherSprint Challenge
 
+[![codecov](https://codecov.io/gh/syntaqx/ciphersprint/graph/badge.svg?token=VWvgfjt1FS)](https://codecov.io/gh/syntaqx/ciphersprint)
+
 Solve for https://ciphersprint.pulley.com/
 
 I did this with multiple emails, as each challenger is given different
