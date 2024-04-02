@@ -22,13 +22,11 @@ func TestClient_GetChallenge(t *testing.T) {
 	}))
 	defer ts.Close()
 
-	// Create a client with the test server URL
-	baseURL, _ := url.Parse(ts.URL)
+	client := NewClient(ts.Client())
 
-	client := &Client{
-		BaseURL:    baseURL,
-		httpClient: ts.Client(),
-	}
+	// Set the baseURL to the client to the test server URL
+	baseURL, _ := url.Parse(ts.URL)
+	client.BaseURL = baseURL
 
 	// Call the GetChallenge method
 	challengeResponse, err := client.GetChallenge("/challenge")
