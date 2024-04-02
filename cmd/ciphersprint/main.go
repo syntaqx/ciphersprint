@@ -16,7 +16,6 @@ func isValidEmail(email string) bool {
 }
 
 func main() {
-
 	client := ciphersprint.NewClient(nil)
 
 	// challenge
