@@ -19,6 +19,8 @@ var decryptors = []Decryptor{
 	&ScrambledDecryptor{},
 	&JSONASCIIDecryptor{},
 	&ASCIIAddDecryptor{},
+	&NonHexFilterDecryptor{},
+	&CustomHexDecryptor{},
 	// Add more decryptors as needed...
 }
 
