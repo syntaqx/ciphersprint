@@ -18,7 +18,7 @@ func TestClient_GetChallenge(t *testing.T) {
 			EncryptionMethod: "hex decoded, encrypted with XOR, hex encoded again. key: secret",
 			EncryptedPath:    "task_2480774e9c35486d2825654caa1a8b63",
 		}
-		json.NewEncoder(w).Encode(challengeResponse)
+		_ = json.NewEncoder(w).Encode(challengeResponse)
 	}))
 	defer ts.Close()
 
