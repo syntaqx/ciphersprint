@@ -21,6 +21,13 @@ func TestXorHexDecryptor_Decrypt(t *testing.T) {
 			expectedDecryptedPath: "task_57e5143cf9413b084b570038d97fe811",
 			expectedError:         nil,
 		},
+		{
+			name:                  "Test 2",
+			encryptionMethod:      "hex decoded, encrypted with XOR, hex encoded again. key: secret",
+			encryptedPath:         "task_27800310543fd34c1aec4285d27c8d6e",
+			expectedDecryptedPath: "task_54e56062314ba029799e27f1a119ee1c",
+			expectedError:         nil,
+		},
 		// Add more test cases as needed
 	}
 
@@ -33,10 +40,10 @@ func TestXorHexDecryptor_Decrypt(t *testing.T) {
 				EncryptedPath:    tt.encryptedPath,
 			}
 
-      if !decryptor.Match(challengeResponse) {
+			if !decryptor.Match(challengeResponse) {
 				t.Errorf("Expected match to return true")
 			}
-      
+
 			decryptedPath, err := decryptor.Decrypt(challengeResponse)
 
 			if err != tt.expectedError {
