@@ -26,6 +26,10 @@ func TestASCIIAddDecryptor_Decrypt(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			if !decryptor.Match(tt.challengeResponse) {
+				t.Errorf("Expected match to return true")
+			}
+
 			decryptedPath, err := decryptor.Decrypt(tt.challengeResponse)
 			if err != nil {
 				t.Errorf("Unexpected error: %v", err)

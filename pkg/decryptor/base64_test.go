@@ -18,7 +18,7 @@ func TestBase64Decryptor_Decrypt(t *testing.T) {
 			name:                  "Test 1",
 			expectedDecryptedPath: "task_6c1d15964717bb297932bd6285e8d350",
 			challengeResponse: challenge.ChallengeResponse{
-				EncryptionMethod: "base64",
+				EncryptionMethod: "encoded as base64",
 				EncryptedPath:    "task_NmMxZDE1OTY0NzE3YmIyOTc5MzJiZDYyODVlOGQzNTA=",
 			},
 		},
@@ -27,6 +27,10 @@ func TestBase64Decryptor_Decrypt(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			if !decryptor.Match(tt.challengeResponse) {
+				t.Errorf("Expected match to return true")
+			}
+
 			decryptedPath, err := decryptor.Decrypt(tt.challengeResponse)
 			if err != nil {
 				t.Errorf("Unexpected error: %v", err)
