@@ -33,6 +33,10 @@ func TestXorHexDecryptor_Decrypt(t *testing.T) {
 				EncryptedPath:    tt.encryptedPath,
 			}
 
+      if !decryptor.Match(tt.challengeResponse) {
+				t.Errorf("Expected match to return true")
+			}
+      
 			decryptedPath, err := decryptor.Decrypt(challengeResponse)
 
 			if err != tt.expectedError {
