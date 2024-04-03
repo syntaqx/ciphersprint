@@ -37,5 +37,6 @@ func (d *XorHexDecryptor) Decrypt(challenge challenge.ChallengeResponse) (string
 	}
 
 	decryptedPath := hex.EncodeToString(decryptedBytes)
+
 	return TaskPrefix + decryptedPath, nil
 }
