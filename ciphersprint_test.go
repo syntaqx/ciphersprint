@@ -10,6 +10,14 @@ import (
 	"github.com/syntaqx/ciphersprint/pkg/challenge"
 )
 
+func TestClient_Initialize(t *testing.T) {
+	client := NewClient(nil)
+
+	if client.BaseURL == nil {
+		t.Errorf("Expected BaseURL to not be nil")
+	}
+}
+
 func TestClient_GetChallenge(t *testing.T) {
 	// Create a test server
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
