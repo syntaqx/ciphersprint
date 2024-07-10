@@ -15,22 +15,26 @@ func isValidEmail(email string) bool {
 	return emailRegex.MatchString(email)
 }
 
+func usage() {
+	fmt.Println("Usage: ciphersprint <your_email>")
+	fmt.Println("Please provide a valid email address to start the challenge.")
+}
+
 func main() {
-	client := ciphersprint.NewClient(nil)
-
-	// challenge
-	// write a program that solves the challenge returned by this API
-	// the first task will be returned by a GET request to /{your_email}
-	challengeUrl := "syntaqx@gmail.com"
-	if len(os.Args) > 1 {
-		challengeUrl = os.Args[1]
-	}
-
-	if !isValidEmail(challengeUrl) {
-		fmt.Println("Invalid email address provided, unable to start challenge")
+	if len(os.Args) < 2 {
+		usage()
 		return
 	}
 
+	challengeUrl := os.Args[1]
+
+	if !isValidEmail(challengeUrl) {
+		fmt.Println("Invalid email address provided, unable to start challenge")
+		usage()
+		return
+	}
+
+	client := ciphersprint.NewClient(nil)
 	fmt.Printf("Starting challenge with email address %s\n\n", challengeUrl)
 
 	for {
